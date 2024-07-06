@@ -30,7 +30,8 @@ struct WeatherData: Codable {
     }
 }
 
-struct WeatherDetails: Codable {
+struct WeatherDetails: Codable,Identifiable {
+    var id: UUID = UUID()
     let datetime: String?
     let temp: Double?
     let clouds: Int?

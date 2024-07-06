@@ -34,7 +34,8 @@ class WeatherViewModel: ObservableObject {
     
     
     func searchPressed() {
-        
+        fetchWeather(for: searchText, type: .current)
+        fetchWeather(for: searchText, type: .forecast)
     }
     
     
@@ -60,7 +61,7 @@ class WeatherViewModel: ObservableObject {
             Task {
                 do {
                     let weather = try await self.service.perform(WeatherRequest(cityName: city, type: .forecast), decodeTo: WeatherData.self)
-                    self.forecastDetails = weather.data
+                    self.forecastDetails = Array(weather.data.prefix(3))
                     self.currentStatus = .success
                 }
                 catch {

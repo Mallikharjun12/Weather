@@ -18,23 +18,21 @@ struct SearchBarView: View {
             Button(action: {
                 locationBtnAction?()
             }, label: {
-                Image(systemName: "paperplane.circle")
+                Image(systemName: "location.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 40, height: 40)
+                    .tint(Color(uiColor: .label))
             })
             
-            TextField("Enter your desired Location", text: $text)
-                .foregroundColor(Color.gray)
-                .textFieldStyle(.roundedBorder)
-                .frame(maxWidth: .infinity, minHeight: 35, alignment: .leading)
-                .padding(.horizontal, 6)
-                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1.0))
-                .background(Color.white)
-                .padding(.trailing, 10)
+            TextField("Enter City Name...", text: $text)
+                .foregroundStyle(Color.gray)
+                .padding()
+                .frame(width: .infinity, height: 40, alignment: .leading)
+                .background(Color.blue)
+                .border(Color.clear, width: 1)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
                 
-                
-            
             Button(action: {
                 searchBtnAction?()
             }, label: {
@@ -42,6 +40,7 @@ struct SearchBarView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 40, height: 40)
+                    .tint(Color(uiColor: .label))
             })
         }
         .padding()
