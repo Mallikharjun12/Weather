@@ -8,10 +8,10 @@
 import Foundation
 
 class NetworkManager {
-    static let shared = NetworkManager()
+ //   static let shared = NetworkManager()
     private let urlSession = URLSession.shared
     
-    private init() {}
+  //  private init() {}
     
     func perform<T: Decodable>(_ request: NetworkRequest, decodeTo type: T.Type) async throws -> T {
             let urlRequest = try request.urlRequest()

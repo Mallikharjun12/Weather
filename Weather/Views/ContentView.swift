@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject var viewModel = WeatherViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            VStack {
+                SearchBarView(text: $viewModel.searchText,
+                              locationBtnAction: viewModel.locationPressed,
+                              searchBtnAction: viewModel.searchPressed)
+                Spacer()
+            }
         }
-        .padding()
     }
 }
 

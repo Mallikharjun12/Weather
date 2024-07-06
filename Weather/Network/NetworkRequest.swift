@@ -11,6 +11,7 @@ enum HTTPMethod:String {
     case get = "GET"
 }
 
+// protocol for creating url and request
 protocol NetworkRequest {
     var baseUrl:String { get }
     var path:String { get }
