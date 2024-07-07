@@ -7,8 +7,7 @@
 
 import Foundation
 
-import Foundation
-
+var formatter = DateFormatter()
 struct WeatherData: Codable {
     let cityName: String?
     let countryCode: String?
@@ -31,7 +30,9 @@ struct WeatherData: Codable {
 }
 
 struct WeatherDetails: Codable,Identifiable {
-    var id: UUID = UUID()
+    var id: UUID {
+        return UUID()
+    }
     let datetime: String?
     let temp: Double?
     let clouds: Int?
@@ -44,7 +45,7 @@ struct WeatherDetails: Codable,Identifiable {
     let humidity: Int?
     let visibility: Double?
     let weather: Weather
-    let windSpeed: Double?
+  //  let windSpeed: Double?
     let windDirection: String?
     
     // fields for forecast data
@@ -53,7 +54,20 @@ struct WeatherDetails: Codable,Identifiable {
     let snow: Double?
     let snowDepth: Double?
     let uv: Double?
-    let windGustSpeed: Double?
+    let wind_spd: Double?
+    let rh:Int?
+    
+    //
+    var formattedDate:String {
+        formatter.dateFormat = "yyyy-MM-dd"
+        if let datetime = datetime {
+            if let date = formatter.date(from: datetime) {
+                formatter.dateFormat = "dd MMM"
+                return formatter.string(from: date)
+            }
+        }
+        return ""
+    }
 }
 
 struct Weather: Codable {

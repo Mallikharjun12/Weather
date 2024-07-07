@@ -8,6 +8,7 @@
 import Foundation
 
 enum Status {
+    case none
     case loading
     case success
     case failure(Error)
@@ -18,18 +19,19 @@ class WeatherViewModel: ObservableObject {
     @Published var currentWeather: WeatherDetails?
     @Published var forecastDetails: [WeatherDetails] = []
     @Published var isLoading = false
-    @Published var errorMessage: String?
     @Published var searchText:String = ""
 
     private let service = NetworkManager()
     private var searchTimer:Timer?
     
-    @Published var currentStatus:Status = .loading
-    @Published var forecastStatus:Status = .loading
+    @Published var currentStatus:Status = .none
+    @Published var forecastStatus:Status = .none
     
     
     func locationPressed() {
+         // fetch current location
         
+        // call method for current weather and forecast
     }
     
     
@@ -47,11 +49,12 @@ class WeatherViewModel: ObservableObject {
             Task {
                 do {
                     let weather = try await self.service.perform(WeatherRequest(cityName: city, type: .current), decodeTo: WeatherData.self)
-                    self.weatherData = weather
-                    self.currentStatus = .success
+                    DispatchQueue.main.async {
+                        self.weatherData = weather
+                        self.currentStatus = .success
+                    }
                 }
                 catch {
-                    self.errorMessage = error.localizedDescription
                     self.currentStatus = .failure(error)
                 }
                 
@@ -61,12 +64,13 @@ class WeatherViewModel: ObservableObject {
             Task {
                 do {
                     let weather = try await self.service.perform(WeatherRequest(cityName: city, type: .forecast), decodeTo: WeatherData.self)
-                    self.forecastDetails = Array(weather.data.prefix(3))
-                    self.currentStatus = .success
+                    DispatchQueue.main.async {
+                        self.forecastDetails = Array(weather.data.prefix(3))
+                        self.forecastStatus = .success
+                    }
                 }
                 catch {
-                    self.errorMessage = error.localizedDescription
-                    self.currentStatus = .failure(error)
+                    self.forecastStatus = .failure(error)
                 }
                 
             }
@@ -74,14 +78,4 @@ class WeatherViewModel: ObservableObject {
     }
 }
 
-/*
- Task {
-     do {
-        let weather = try await service.perform(WeatherRequest(cityName: city, type: .current), decodeTo: WeatherData.self)
-     }
-     catch {
-         self.errorMessage = error.localizedDescription
-     }
-     
- }
- */
+

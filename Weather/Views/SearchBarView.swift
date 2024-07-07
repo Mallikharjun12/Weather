@@ -26,7 +26,7 @@ struct SearchBarView: View {
             })
             
             TextField("Enter City Name...", text: $text)
-                .foregroundStyle(Color.gray)
+                .foregroundStyle(Color.black)
                 .padding()
                 .frame(width: .infinity, height: 40, alignment: .leading)
                 .background(Color.blue)
@@ -48,5 +48,5 @@ struct SearchBarView: View {
 }
 
 #Preview {
-    SearchBarView(text: .constant("Vihayawada"))
+    SearchBarView(text: .constant("Vijayawada"))
 }
