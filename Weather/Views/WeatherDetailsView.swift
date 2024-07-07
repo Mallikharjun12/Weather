@@ -35,16 +35,16 @@ struct WeatherView: View {
                             Image(systemName: details.weather.weatherImageName)
                                 .font(.system(size: 40))
                                 .foregroundStyle(.white)
-                                .tint(.white)
                             
                             Text(details.weather.description)
+                                .foregroundStyle(.white)
                         }
                         .frame(width: 150, alignment: .leading)
                         
                         Spacer()
                         
                         Text((details.temp?.roundDouble() ?? "") + "°")
-                            .font(.system(size: 100))
+                            .font(.system(size: 80))
                             .fontWeight(.bold)
                             .foregroundStyle(.white)
                             .padding()
