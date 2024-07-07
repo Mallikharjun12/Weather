@@ -33,12 +33,13 @@ struct WeatherDetails: Codable,Identifiable {
     var id: UUID {
         return UUID()
     }
+    let city_name:String?
     let datetime: String?
     let temp: Double?
     let clouds: Int?
     let dewpt: Double?
-    let maxTemp: Double?
-    let minTemp: Double?
+    let max_temp: Double?
+    let min_temp: Double?
     let moonPhase: Double?
     let precip: Double?
     let pressure: Double?

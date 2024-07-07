@@ -32,7 +32,7 @@ struct ContentView: View {
                         case .loading:
                             LoadingView(title: "Fetching Current Weather ")
                         case .success:
-                            Text(viewModel.weatherData?.cityName ?? "Bengaluru")
+                            Text(viewModel.weatherData?.data.first?.city_name ?? "Bengaluru")
                                 .font(.largeTitle)
                                 .foregroundStyle(.white)
                                 .padding()
@@ -44,7 +44,7 @@ struct ContentView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 150, height: 150)
                                 
-                                Text("\(viewModel.weatherData?.data.first?.temp ?? 27)°C")
+                                Text("\(viewModel.weatherData?.data.first?.temp?.roundDouble() ?? "27")°C")
                                     .font(.system(size: 50, weight: .regular))
                                     .foregroundStyle(.white)
                             }
@@ -64,7 +64,7 @@ struct ContentView: View {
                             HStack(spacing:12) {
                                 ForEach(viewModel.forecastDetails) { detail in
                                     NavigationLink {
-                                        WeatherView(details: detail, cityName: viewModel.weatherData?.cityName ?? "")
+                                        WeatherView(details: detail, cityName: viewModel.weatherData?.data.first?.city_name ?? "")
                                     } label: {
                                         WeatherDayView(weatherData: detail)
                                     }

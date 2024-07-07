@@ -18,10 +18,12 @@ struct WeatherView: View {
                 VStack(alignment: .leading, spacing: 5) {
                     Text(cityName)
                         .bold()
+                        .foregroundStyle(.white)
                         .font(.title)
                     
                     Text(details.formattedDate)
                         .fontWeight(.light)
+                        .foregroundStyle(.white)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -32,6 +34,8 @@ struct WeatherView: View {
                         VStack(spacing: 20) {
                             Image(systemName: details.weather.weatherImageName)
                                 .font(.system(size: 40))
+                                .foregroundStyle(.white)
+                                .tint(.white)
                             
                             Text(details.weather.description)
                         }
@@ -42,6 +46,7 @@ struct WeatherView: View {
                         Text((details.temp?.roundDouble() ?? "") + "°")
                             .font(.system(size: 100))
                             .fontWeight(.bold)
+                            .foregroundStyle(.white)
                             .padding()
                     }
                     
@@ -72,9 +77,9 @@ struct WeatherView: View {
                         .padding(.bottom)
                     
                     HStack {
-                        WeatherRow(image: "thermometer", name: "Min temp", value: ((details.minTemp?.roundDouble() ?? "") + ("°")))
+                        WeatherRow(image: "thermometer", name: "Min temp", value: ((details.min_temp?.roundDouble() ?? "") + ("°")))
                         Spacer()
-                        WeatherRow(image: "thermometer", name: "Max temp", value: ((details.maxTemp?.roundDouble() ?? "") + "°"))
+                        WeatherRow(image: "thermometer", name: "Max temp", value: ((details.max_temp?.roundDouble() ?? "") + "°"))
                     }
                     
                     HStack {
