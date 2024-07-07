@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 enum Status {
     case none
@@ -14,7 +15,7 @@ enum Status {
     case failure(Error)
 }
 
-class WeatherViewModel: ObservableObject {
+class WeatherViewModel:NSObject, ObservableObject {
     @Published var weatherData: WeatherData?
     @Published var currentWeather: WeatherDetails?
     @Published var forecastDetails: [WeatherDetails] = []
@@ -28,10 +29,20 @@ class WeatherViewModel: ObservableObject {
     @Published var forecastStatus:Status = .none
     
     
+    // for fetching current location
+    let locationManager = CLLocationManager()
+    override init() {
+        super.init()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+    }
+    
+    var city:String = ""
     func locationPressed() {
          // fetch current location
+        locationManager.requestLocation()
         
-        // call method for current weather and forecast
     }
     
     
@@ -79,3 +90,31 @@ class WeatherViewModel: ObservableObject {
 }
 
 
+extension WeatherViewModel: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            locationManager.stopUpdatingLocation()
+            
+            let geoCoder = CLGeocoder()
+            
+            geoCoder.reverseGeocodeLocation(location) {[weak self] placemarks, error in
+                guard let self else {
+                    return
+                }
+                guard let placemarks = placemarks, error == nil else {
+                    return
+                }
+                print(placemarks.first?.locality)
+                self.city = placemarks.first?.locality ?? ""
+                
+                self.fetchWeather(for:city , type: .current)
+                self.fetchWeather(for: city, type: .forecast)
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+}

@@ -32,6 +32,3 @@ struct WeatherDayView: View {
     }
 }
 
-//#Preview {
-//    WeatherDayView()
-//}
