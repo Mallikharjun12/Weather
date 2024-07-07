@@ -29,6 +29,11 @@ struct WeatherDayView: View {
                 .foregroundStyle(.white)
         }
         .padding()
+        .overlay {
+            RoundedRectangle(cornerRadius: 12.0)
+                .stroke(.blue, lineWidth: 1.0)
+        }
+        .padding()
 
     }
 }
